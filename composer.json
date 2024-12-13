@@ -1,0 +1,37 @@
+{
+  "version": "1.0.0",
+  "name": "NalyarUlryck/two-factor-auth",
+  "description": "A Laravel package for two-factor authentication",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+        "name": "Nalyar Ulryck",
+        "email": "raylanzeeroo@outlook.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "NalyarUlryck\\TwoFactorAuth\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^8.0",
+    "laravel/framework": "^8.0",
+    "pragmarx/google2fa-laravel": "^2.2",
+    "bacon/bacon-qr-code": "^3.0"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "NalyarUlryck\\TwoFactorAuth\\TwoFactorAuthServiceProvider"
+      ]
+    }
+  },
+    "repositories": [
+    {
+      "type": "path",
+      "url": "./packages/NalyarUlryck/two-factor-auth"
+    }
+  ]
+}

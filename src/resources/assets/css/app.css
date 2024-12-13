@@ -1,0 +1,66 @@
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background-color: #1b00ff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: width 0.5s ease, background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #1502bd;
+}
+
+.button.sent {
+    width: 50px;
+    border-radius: 1000px;
+    background-color: #28A745;
+}
+
+.checkmark {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 0;
+    height: 0;
+    border-right: 6px solid white;
+    border-bottom: 6px solid white;
+    transform: rotate(43deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.button.sent .checkmark {
+    width: 15px;
+    height: 15px;
+    opacity: 1;
+    animation: draw-check 0.5s ease forwards;
+}
+
+@keyframes draw-check {
+    0% {
+        width: 0;
+        height: 0;
+    }
+
+    50% {
+        width: 12px;
+        height: 0;
+    }
+
+    100% {
+        width: 12px;
+        height: 22px;
+    }
+}
