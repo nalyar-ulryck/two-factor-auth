@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "name": "NalyarUlryck/two-factor-auth",
+  "name": "nalyar-ulryck/two-factor-auth",
   "description": "A Laravel package for two-factor authentication",
   "type": "library",
   "license": "MIT",
