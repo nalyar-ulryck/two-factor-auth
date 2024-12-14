@@ -22,7 +22,6 @@
             align-items: center;
             height: 100dvh;
             color: #031e23;
-            font-weight: ;
 
         }
 
