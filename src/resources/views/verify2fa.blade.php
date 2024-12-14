@@ -3,11 +3,8 @@
 @section('content')
     <x-twofactor::card-login>
         @slot('title')
-            <div class="login-title mt-4">
-                <h2 class="text-center text-dark">Autenticação de 2 Fatores</h2>
-            </div>
-
-            <p>{{ __('Informe o Código OTP para completar seu login.') }}</p>
+        <p id="title">Autenticação 2 Fatores</p>
+            <span class="text">Informe o Código OTP para completar seu login.</span>
         @endslot
         @slot('btnSend')
             <x-twofactor::btn>
@@ -99,12 +96,12 @@
         @if (Route::has('login'))
             @auth
                 <a href="{{ url()->previous() }}"
-                    class="text-secondary hover:text-dark dark:text-gray-400 focus:outline-none focus:outline-2 focus:rounded focus:outline-danger d-flex align-items-center justify-content-end mt-3"
+                    class="back-login"
                     style="font-size: 14px;">
                         <span>
                             Retorna
                             para Página de Login
-                        </span> <span class="material-symbols-outlined" style="font-size: 20px;transform: translateX(-10%);">
+                        </span> <span class="material-symbols-outlined" style="font-size: 20px;transform: translateX(-27%)translatey(30%);">
                             undo
                         </span>
                 </a>

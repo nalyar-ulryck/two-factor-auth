@@ -3,15 +3,11 @@
 @section('content')
     <x-twofactor::card-login>
         @slot('title')
-            <div class="login-title mt-4">
-                <h2 class="text-center text-dark">Habilitar 2FA</h2>
-            </div>
-            <div class="mb-4 text-justify">
-                <p>Escaneie este código QR com o aplicativo Google Authenticator e insira o código para
-                    habilitar a autenticação de dois fatores.</p>
-                <div class="d-flex justify-content-center my-4">
-                    <img src="{!! $QR_Image !!}" alt="" srcset="">
-                </div>
+            <h1>Habilitar 2FA</h1>
+            <p>Escaneie este código QR com o aplicativo Google Authenticator e insira o código para habilitar a autenticação
+                de dois fatores.</p>
+            <div class="qrcode">
+                <img src="{!! $QR_Image !!}" alt="" srcset="">
             </div>
         @endslot
         @slot('btnSend')
