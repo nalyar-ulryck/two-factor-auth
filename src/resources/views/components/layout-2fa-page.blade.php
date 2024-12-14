@@ -76,6 +76,10 @@
             outline: none;
         }
 
+        .input-group:focus-within {
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6;
+        }
 
         .material-symbols-outlined {
             font-variation-settings:
