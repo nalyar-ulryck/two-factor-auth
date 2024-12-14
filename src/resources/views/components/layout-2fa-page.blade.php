@@ -49,7 +49,7 @@
 
 
 
-        .qrcode {
+        img {
             margin: 20px 0;
         }
 

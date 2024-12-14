@@ -6,9 +6,8 @@
             <h1>Habilitar 2FA</h1>
             <p>Escaneie este código QR com o aplicativo Google Authenticator e insira o código para habilitar a autenticação
                 de dois fatores.</p>
-            <div class="qrcode">
-                <img src="{!! $QR_Image !!}" alt="" srcset="">
-            </div>
+
+            <img src="{!! $QR_Image !!}" alt="" srcset="">
         @endslot
         @slot('btnSend')
             <x-twofactor::btn>
