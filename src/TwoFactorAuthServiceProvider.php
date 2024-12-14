@@ -32,5 +32,7 @@ class TwoFactorAuthServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/./resources/assets' => public_path('vendor/two-factor-auth'),
         ], 'assets');
+
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
     }
 }
