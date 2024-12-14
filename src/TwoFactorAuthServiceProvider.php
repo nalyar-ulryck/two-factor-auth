@@ -21,11 +21,6 @@ class TwoFactorAuthServiceProvider extends ServiceProvider
         // Carrega views do pacote
         $this->loadViewsFrom(__DIR__ . '/./resources/views', 'twofactor');
 
-        // Publica configurações
-        $this->publishes([
-            __DIR__ . '/../config/twofactor.php' => config_path('twofactor.php'),
-        ], 'config');
-
         $this->app['router']->aliasMiddleware('twofactor', \NalyarUlryck\TwoFactorAuth\Http\Middleware\TwoFactorAuthenticated::class);
 
         // Publica assets do pacote
@@ -34,5 +29,9 @@ class TwoFactorAuthServiceProvider extends ServiceProvider
         ], 'assets');
 
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+
+        $this->publishes([
+            __DIR__ . '/./config/twofactor.php' => config_path('twofactor.php'),
+        ], 'config');
     }
 }

@@ -57,7 +57,7 @@ class TwoFactorController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'message' => 'OTP verificado com sucesso!',
-                    'redirect' => route('dashboard')
+                    'redirect' => route(config('twofactor.routes.redirect_after_verify2fa'))
                 ], 200);
             } else {
                 return response()->json([
@@ -72,7 +72,7 @@ class TwoFactorController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'message' => 'OTP verificado com sucesso!',
-                    'redirect' => route('dashboard')
+                    'redirect' => route(config('twofactor.routes.redirect_after_verify2fa'))
                 ], 200);
             } else {
                 return response()->json([
