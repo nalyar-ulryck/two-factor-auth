@@ -7,7 +7,7 @@
             <p>Escaneie este código QR com o aplicativo Google Authenticator e insira o código para habilitar a autenticação
                 de dois fatores.</p>
 
-            <img src="{!! $QR_Image !!}" alt="" srcset="">
+            <a src="{!! $QR_Image !!}">
         @endslot
         @slot('btnSend')
             <x-twofactor::btn>
