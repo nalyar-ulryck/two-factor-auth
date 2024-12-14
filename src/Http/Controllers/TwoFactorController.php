@@ -10,11 +10,6 @@ use PragmaRX\Google2FAQRCode\Google2FA;
 
 class TwoFactorController extends Controller
 {
-    protected $user;
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
 
     public function enable2Fa()
     {

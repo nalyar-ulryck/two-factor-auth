@@ -35,21 +35,19 @@
             position: relative;
         }
 
+        .container p {
+            font-size: 16px;
+            color: #666;
+            text-align: justify;
+        }
+
         #title {
             font-size: 26px;
             font-weight: 900;
             display: inline;
             margin-bottom: 40px;
-
             text-align: center;
             color: #333;
-            /* margin-bottom: 26px; */
-        }
-
-
-
-        img {
-            margin: 20px 0;
         }
 
         .input-group {
