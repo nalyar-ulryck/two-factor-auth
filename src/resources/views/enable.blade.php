@@ -40,9 +40,6 @@
                         }
                     }
 
-
-
-                    // Função para enviar a requisição POST
                     async function sendOTP() {
                         const errorMessage = document.getElementById('error-message');
 
@@ -70,7 +67,6 @@
 
                                 window.location.href = data.redirect;
                             }, 800);
-                            // Sucesso: Redireciona ou executa uma ação
                         } catch (error) {
 
                             errorMessage.textContent = error || 'Erro inesperado. Tente novamente.';

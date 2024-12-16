@@ -145,6 +145,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 9px;
     width: 0;
     height: 0;
     border-right: 6px solid white;
