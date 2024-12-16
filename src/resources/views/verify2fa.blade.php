@@ -25,11 +25,13 @@
                         event.preventDefault();
                         if (event.type === 'click') {
                             if (otp.value) {
+                                button.disabled = true;
                                 sendOTP();
                             }
 
                         } else if (event.key === 'Enter') {
                             if (otp.value) {
+                                otp.disabled = true;
                                 sendOTP();
                             }
                         }
@@ -56,6 +58,8 @@
 
                             if (!response.ok) {
                                 const errorData = await response.json();
+                                button.disabled = errorData ? false : true;
+                                otp.disabled = errorData ? false : true;
                                 throw new Error(errorData.message || 'Erro ao verificar o código OTP.');
                             }
                             button.classList.add('sent');
