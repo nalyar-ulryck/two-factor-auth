@@ -5,5 +5,5 @@
 
     {{ $btnSend }}
 
-    @yield('login')
+    @yield('btn-back')
 </div>

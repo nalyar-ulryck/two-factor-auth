@@ -82,4 +82,20 @@ class TwoFactorController extends Controller
     {
         return view('twofactor::verify2fa');
     }
+
+    public function backLogin(Request $request)
+    {
+        // dd($request);
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'logout com sucesso!',
+            'redirect' => route('login')
+        ], 200);
+    }
 }
