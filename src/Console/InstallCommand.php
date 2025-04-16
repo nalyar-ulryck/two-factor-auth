@@ -49,16 +49,6 @@ class InstallCommand extends Command implements PromptsForMissingInput
     public function handle()
     {
         $stack = $this->argument('stack');
-        $provider = $this->option('provider');
-        $force = $this->option('force');
-
-        // Exibir informações sobre a instalação em andamento
-        $this->components->info("Instalando Two Factor Auth ({$provider}) para stack {$stack}");
-
-        // Verificar se força a reinstalação
-        if ($force) {
-            $this->components->warn('Modo força ativado - Arquivos existentes serão substituídos.');
-        }
 
         // Instalação baseada no stack escolhido
         $result = 0;
@@ -76,19 +66,13 @@ class InstallCommand extends Command implements PromptsForMissingInput
             $this->newLine();
             $this->components->info('✅ Two Factor Auth instalado com sucesso!');
 
-            $this->components->bulletList([
-                "Stack: {$stack}",
-                "Provider: {$provider}",
-                "Middleware: Instalado",
-                "Configurações: Atualizadas"
-            ]);
 
             $this->newLine();
             $this->line('Próximos passos:');
             $this->components->bulletList([
-                'Execute <fg=yellow>php artisan migrate</> para criar as tabelas necessárias',
+                'Execute <fg=yellow>php artisan migrate</> para adicionar a coluna google2fa_secret',
                 'Adicione a middleware <fg=yellow>2fa</> às rotas que deseja proteger',
-                'Configure suas chaves no arquivo <fg=yellow>config/2fa.php</>'
+                'Configure a rota padrão do seu sistema no arquivo <fg=yellow>config/twofactor.php</>'
             ]);
         }
 

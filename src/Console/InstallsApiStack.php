@@ -14,7 +14,7 @@ trait InstallsApiStack
      */
     protected function installApiStack()
     {
-        // (new Filesystem)->copyDirectory(__DIR__.'/../config', config_path());
+        (new Filesystem)->copyDirectory(__DIR__.'/../config', config_path());
 
         // Registra o provider para o comando atual
         app()->register(\NalyarUlryck\TwoFactorAuth\ApiServicProvider::class);
