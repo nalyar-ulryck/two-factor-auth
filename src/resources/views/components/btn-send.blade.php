@@ -1,6 +1,7 @@
 <div class="btn-position">
     <button class="button" id="btn-send">{{ $slot }}</button>
 </div>
+
 <script>
     const button = document.getElementById('btn-send');
     document.addEventListener('DOMContentLoaded', function() {
@@ -43,7 +44,7 @@
                     },
                     body: JSON.stringify({
                         'otp': otp.value,
-                        {{$sendType}}: true
+                        {{ $sendType }}: true
                     })
                 });
 

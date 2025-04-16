@@ -3,7 +3,7 @@
 namespace NalyarUlryck\TwoFactorAuth\Console;
 
 use Illuminate\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
+use Illuminate\Support\Str;
 
 trait InstallsBladeStack
 {
@@ -14,77 +14,52 @@ trait InstallsBladeStack
      */
     protected function installBladeStack()
     {
-        // NPM Packages...
-        $this->updateNodePackages(function ($packages) {
-            return [
-                '@tailwindcss/forms' => '^0.5.2',
-                'alpinejs' => '^3.4.2',
-                'autoprefixer' => '^10.4.2',
-                'postcss' => '^8.4.31',
-                'tailwindcss' => '^3.1.0',
-            ] + $packages;
-        });
 
-        // Controllers...
-        (new Filesystem)->ensureDirectoryExists(app_path('Http/Controllers'));
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/default/app/Http/Controllers', app_path('Http/Controllers'));
+        (new Filesystem)->copyDirectory(__DIR__.'/../config', config_path());
 
-        // Requests...
-        (new Filesystem)->ensureDirectoryExists(app_path('Http/Requests'));
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/default/app/Http/Requests', app_path('Http/Requests'));
+        // Registra o provider para o comando atual
+        app()->register(\NalyarUlryck\TwoFactorAuth\MonolithServicProvider::class);
 
-        // Views...
-        (new Filesystem)->ensureDirectoryExists(resource_path('views'));
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/default/resources/views', resource_path('views'));
+        // Adiciona o provider ao arquivo de configuração do usuário
+        $this->addBladeServiceProviderToAppConfig();
 
-        if (! $this->option('dark')) {
-            $this->removeDarkClasses((new Finder)
-                ->in(resource_path('views'))
-                ->name('*.blade.php')
-                ->notPath('livewire/welcome/navigation.blade.php')
-                ->notName('welcome.blade.php')
-            );
+        // Publica os assets, etc. se necessário
+        $this->call('vendor:publish', [
+            '--provider' => 'NalyarUlryck\TwoFactorAuth\MonolithServicProvider',
+            '--tag' => ['config', 'assets'],
+        ]);
+
+        return 0;
+    }
+
+    /**
+     * Adiciona o Service Provider ao arquivo config/app.php
+     */
+    protected function addBladeServiceProviderToAppConfig()
+    {
+        if (! file_exists(config_path('app.php'))) {
+            return;
         }
 
-        // Components...
-        (new Filesystem)->ensureDirectoryExists(app_path('View/Components'));
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/default/app/View/Components', app_path('View/Components'));
+        $providerClass = '\\NalyarUlryck\\TwoFactorAuth\\MonolithServicProvider::class';
 
-        // Tests...
-        if (! $this->installTests()) {
-            return 1;
+        // Verifica se o provider já está registrado
+        $appConfig = file_get_contents(config_path('app.php'));
+        if (Str::contains($appConfig, $providerClass)) {
+            $this->components->info('Service Provider já está registrado');
+            return;
         }
 
-        // Routes...
-        copy(__DIR__.'/../../stubs/default/routes/web.php', base_path('routes/web.php'));
-        copy(__DIR__.'/../../stubs/default/routes/auth.php', base_path('routes/auth.php'));
+        // Adiciona o provider ao array de providers
+        file_put_contents(
+            config_path('app.php'),
+            str_replace(
+                "        App\\Providers\RouteServiceProvider::class,\n",
+                "        App\\Providers\RouteServiceProvider::class,\n        $providerClass,\n",
+                $appConfig
+            )
+        );
 
-        // "Dashboard" Route...
-        $this->replaceInFile('/home', '/dashboard', resource_path('views/welcome.blade.php'));
-        $this->replaceInFile('Home', 'Dashboard', resource_path('views/welcome.blade.php'));
-
-        // Tailwind / Vite...
-        copy(__DIR__.'/../../stubs/default/tailwind.config.js', base_path('tailwind.config.js'));
-        copy(__DIR__.'/../../stubs/default/postcss.config.js', base_path('postcss.config.js'));
-        copy(__DIR__.'/../../stubs/default/vite.config.js', base_path('vite.config.js'));
-        copy(__DIR__.'/../../stubs/default/resources/css/app.css', resource_path('css/app.css'));
-        copy(__DIR__.'/../../stubs/default/resources/js/app.js', resource_path('js/app.js'));
-
-        $this->components->info('Installing and building Node dependencies.');
-
-        if (file_exists(base_path('pnpm-lock.yaml'))) {
-            $this->runCommands(['pnpm install', 'pnpm run build']);
-        } elseif (file_exists(base_path('yarn.lock'))) {
-            $this->runCommands(['yarn install', 'yarn run build']);
-        } elseif (file_exists(base_path('bun.lock')) || file_exists(base_path('bun.lockb'))) {
-            $this->runCommands(['bun install', 'bun run build']);
-        } elseif (file_exists(base_path('deno.lock'))) {
-            $this->runCommands(['deno install', 'deno task build']);
-        } else {
-            $this->runCommands(['npm install', 'npm run build']);
-        }
-
-        $this->line('');
-        $this->components->info('Breeze scaffolding installed successfully.');
+        $this->components->info('Service Provider registrado em config/app.php');
     }
 }

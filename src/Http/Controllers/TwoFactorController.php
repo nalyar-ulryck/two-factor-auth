@@ -13,10 +13,11 @@ class TwoFactorController extends Controller
 
     public function enable2Fa()
     {
-
         $user = Auth::user();
         if (!$user) {
-            return redirect()->route('login'); // Redireciona se o usuário não estiver autenticado
+            return response()->json([
+                'mensagem' => 'Usuário não autenticado.'
+            ], 401);
         }
 
         $google2fa = new Google2FA();
@@ -28,8 +29,7 @@ class TwoFactorController extends Controller
             $user->username ?? $user->email,
             $secretKey
         );
-
-        return view('twofactor::enable', ['QR_Image' => $qrCode, 'secret' => $secretKey]);
+        return response()->json(['QR_Image' => $qrCode]);
     }
 
     public function verify2Fa(Request $request)
