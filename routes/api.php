@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use NalyarUlryck\TwoFactorAuth\Http\Controllers\TwoFactorController;
 use PHPUnit\Framework\Attributes\Group;
 
-Route::middleware(['api','auth'])->prefix('api')->group(function () {
+Route::middleware(['api','auth:sanctum'])->prefix('api')->group(function () {
     Route::prefix('twofactor')->group(function () {
 
         Route::get('/enable-2fa', [TwoFactorController::class, 'enable2fa'])->name('enable2fa');
