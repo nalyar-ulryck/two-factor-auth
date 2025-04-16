@@ -1,5 +1,5 @@
 {
-  "version": "1.1.1",
+  "version": "1.1.0",
   "name": "nalyar-ulryck/two-factor-auth",
   "description": "A Laravel package for two-factor authentication",
   "type": "library",
