@@ -4,19 +4,10 @@ namespace NalyarUlryck\TwoFactorAuth\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
-
-use function Laravel\Prompts\confirm;
-use function Laravel\Prompts\multiselect;
 use function Laravel\Prompts\select;
 
 #[AsCommand(name: '2fa:install')]
@@ -50,7 +41,6 @@ class InstallCommand extends Command implements PromptsForMissingInput
     {
         $stack = $this->argument('stack');
 
-        // Instalação baseada no stack escolhido
         $result = 0;
         if ($stack === 'api') {
             $result = $this->installApiStack();
@@ -61,20 +51,19 @@ class InstallCommand extends Command implements PromptsForMissingInput
             return 1;
         }
 
-        // Se a instalação foi bem-sucedida
         if ($result === 0) {
             $this->newLine();
-            $this->components->info('✅ Two Factor Auth instalado com sucesso!');
-
+            $this->components->info('✅ Two Factor Auth installed successfully!');
 
             $this->newLine();
-            $this->line('Próximos passos:');
+            $this->line('Next steps:');
             $this->components->bulletList([
-                'Execute <fg=yellow>php artisan migrate</> para adicionar a coluna google2fa_secret',
-                'Adicione a middleware <fg=yellow>2fa</> às rotas que deseja proteger',
-                'Configure a rota padrão do seu sistema no arquivo <fg=yellow>config/twofactor.php</>'
+                'Run <fg=yellow>php artisan migrate</> to add the google2fa_secret column',
+                'Add the middleware <fg=yellow>2fa</> to the routes you want to protect',
+                'Set up your system’s default route in the file <fg=yellow>config/twofactor.php</>'
             ]);
         }
+
 
         return $result;
     }

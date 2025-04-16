@@ -36,7 +36,7 @@ trait InstallsApiStack
         // Verifica se o provider já está registrado
         $appConfig = file_get_contents(config_path('app.php'));
         if (Str::contains($appConfig, $providerClass)) {
-            $this->components->info('Service Provider já está registrado');
+            $this->components->info('Service Provider is already registered');
             return;
         }
 
@@ -50,6 +50,6 @@ trait InstallsApiStack
             )
         );
 
-        $this->components->info('Service Provider registrado em config/app.php');
+        $this->components->info('Service Provider registered in config/app.php');
     }
 }
