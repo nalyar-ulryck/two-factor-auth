@@ -24,6 +24,17 @@ class TwoFactorAuthServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/./config/twofactor.php' => config_path('twofactor.php'),
         ], 'config');
+
+          // Carrega rotas
+          $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+
+          // Carrega views do pacote
+          $this->loadViewsFrom(__DIR__ . '/./resources/views', 'twofactor');
+
+          // Publica assets do pacote
+          $this->publishes([
+              __DIR__ . '/./resources/assets' => public_path('vendor/two-factor-auth'),
+          ], 'assets');
     }
 
 

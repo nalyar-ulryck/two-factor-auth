@@ -17,15 +17,8 @@ class TwoFactorAuthenticated
 
         // Verifica se é uma rota de API
         $isApiRoute = preg_match('/\bapi\b/', $request->route()->getPrefix());
-        // dd(!$isApiRoute && $request->hasSession());
         // Lógica para rotas WEB
         if (!$isApiRoute) {
-
-            return response()->json([
-                'mensagem' => '2FA não autenticado',
-                'codigo' => $request->route()->getPrefix()
-            ]);
-
             // Usuário não configurou 2FA ainda
             if (!$user->google2fa_secret) {
                 $request->session()->put('2fa_authenticated', false);
