@@ -7,6 +7,7 @@
             <p>Escaneie este código QR com o aplicativo Google Authenticator e insira o código para habilitar a autenticação
                 de dois fatores.</p>
             <div class="qrcode">
+                <img src="" class="img">
             </div>
         @endslot
         @slot('btnSend')
@@ -21,7 +22,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const qrCode = document.querySelector('.qrcode');
+            const qrCode = document.querySelector('.qrcode img');
             (async function() {
                 try {
                     const response = await fetch("{{ route('enable2fa') }}", {
@@ -34,7 +35,7 @@
                         throw new Error(`Erro na requisição: ${response.status}`);
                     }
                     const data = await response.json();
-                    qrCode.innerHTML = data.QR_Image;
+                    qrCode.src = data.QR_Image;
                 } catch (error) {
                     console.error('Erro ao buscar os dados:', error);
                 }
